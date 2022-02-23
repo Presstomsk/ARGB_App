@@ -36,22 +36,25 @@
             <TextBlock Text="Red: "></TextBlock>
             <TextBlock Text="{Binding ElementName=slRed, Path=Value, StringFormat=F0}"></TextBlock>
         </StackPanel>
-        <Slider x:Name="slRed" Grid.Row="1" Grid.Column="2" Margin="10" Minimum="0" Maximum="255" IsEnabled="{Binding ElementName=chbRed, Path=IsChecked}"></Slider>
+        <Slider x:Name="slRed" Grid.Row="1" Grid.Column="2" Margin="10" Minimum="0" Maximum="255" IsEnabled="{Binding ElementName=chbRed, Path=IsChecked}"
+            Value="{Binding SelectedColor.Red}"></Slider>
+        
 
         <CheckBox x:Name="chbGreen" Margin="10" Grid.Row="2"></CheckBox>
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="10">
             <TextBlock Text="Green: "></TextBlock>
             <TextBlock Text="{Binding ElementName=slGreen, Path=Value, StringFormat=F0}"></TextBlock>
         </StackPanel>
-        <Slider x:Name="slGreen"  Grid.Row="2" Grid.Column="2" Margin="10" Minimum="0" Maximum="255" IsEnabled="{Binding ElementName=chbGreen, Path=IsChecked}"></Slider>
+        <Slider x:Name="slGreen"  Grid.Row="2" Grid.Column="2" Margin="10" Minimum="0" Maximum="255" IsEnabled="{Binding ElementName=chbGreen, Path=IsChecked}"
+                Value="{Binding SelectedColor.Green}"></Slider>
 
         <CheckBox x:Name="chbBlue" Margin="10" Grid.Row="3"></CheckBox>
         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Margin="10">
             <TextBlock Text="Blue: "></TextBlock>
             <TextBlock Text="{Binding ElementName=slBlue, Path=Value, StringFormat=F0}"></TextBlock>
         </StackPanel>
-        <Slider x:Name="slBlue"  Grid.Row="3" Grid.Column="2" Margin="10" Minimum="0" Maximum="255" IsEnabled="{Binding ElementName=chbBlue, Path=IsChecked}"></Slider>
-
+        <Slider x:Name="slBlue"  Grid.Row="3" Grid.Column="2" Margin="10" Minimum="0" Maximum="255" IsEnabled="{Binding ElementName=chbBlue, Path=IsChecked}"
+                 Value="{Binding SelectedColor.Blue}"></Slider>
 
         <TextBlock Grid.Column="3" Grid.RowSpan="4" Width="60" Margin="10" Background="{Binding SelectedColor.Brush}"></TextBlock>
 
