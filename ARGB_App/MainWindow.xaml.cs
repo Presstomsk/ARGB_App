@@ -26,8 +26,8 @@ namespace ARGB_App
         {
             ButtonPressed?.Invoke(ColorCol);
         }
-        
 
+        
 
     }
 }

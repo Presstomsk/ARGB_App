@@ -25,13 +25,13 @@ namespace ARGB_App.ViewModel
             }
         }
 
-        public ShowColor showColor { get; set; }
+        public ColorOperations showColor { get; set; }
         public MyViewModel()
         {
             
             SelectedColor = new BrushModel { Alpha = 0, Red = 0, Green = 0, Blue = 0 };
-            showColor = new ShowColor(SelectedColor);
-            MainWindow.ButtonPressed += showColor.InitColorCollection;
+            showColor = new ColorOperations(SelectedColor);
+            MainWindow.ButtonPressed += showColor.AddColor;
 
         }
         
