@@ -59,20 +59,12 @@
         <TextBlock Grid.Column="3" Grid.RowSpan="4" Width="60" Margin="10" Background="{Binding SelectedColor.Brush}"></TextBlock>
 
 
-        <Button Content="Add" Grid.Row="4" Grid.ColumnSpan="2" Margin="10" Height="30"></Button>
+        <Button Content="Add" Grid.Row="4" Grid.ColumnSpan="2" Margin="10" Height="30" Click="Button_Click"></Button>
 
 
-        <ListBox Grid.Row="5" Grid.ColumnSpan="4">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="111"></TextBlock>
-                        <TextBlock></TextBlock>
-                        <Button Content="Delete"></Button>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <ScrollViewer Grid.Row="5" Grid.ColumnSpan="4">
+            <Grid x:Name="ColorCol" />
+        </ScrollViewer>
 
     </Grid>
 </Window>

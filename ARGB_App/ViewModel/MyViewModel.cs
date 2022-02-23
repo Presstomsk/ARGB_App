@@ -1,14 +1,16 @@
 ﻿using ARGB_App.Event;
 using ARGB_App.Model;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-
-
+using System.Windows;
+using System.Windows.Controls;
 
 namespace ARGB_App.ViewModel
 {
+   
     public class MyViewModel : MyEvent
-    {       
-
+    {
+        
         private BrushModel _selectedColor;
         public BrushModel SelectedColor
         {
@@ -18,16 +20,19 @@ namespace ARGB_App.ViewModel
                 if (_selectedColor != value)
                 {
                     _selectedColor = value;
-                    OnPropertyChanged(nameof(SelectedColor));
+                    OnPropertyChanged(nameof(SelectedColor));                    
                 }
             }
         }
-        public ObservableCollection<BrushModel> Colors { set; get; }
 
+        public ShowColor showColor { get; set; }
         public MyViewModel()
         {
-            Colors = new ObservableCollection<BrushModel>();
+            
             SelectedColor = new BrushModel { Alpha = 0, Red = 0, Green = 0, Blue = 0 };
+            showColor = new ShowColor(SelectedColor);
+            MainWindow.ButtonPressed += showColor.InitColorCollection;
+
         }
         
     }
