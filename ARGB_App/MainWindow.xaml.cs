@@ -9,7 +9,11 @@ namespace ARGB_App
     /// Interaction logic for MainWindow.xaml
     /// </summary>
 
-   
+    public delegate void ButtonAddPressedHandler();
+    public delegate void ButtonDeletePressedHandler(string str);
+    public delegate void IsButtonEnabledHandler();
+    public delegate void NotButtonEnabledHandler();
+
     public partial class MainWindow : Window
     {
         public static ButtonAddPressedHandler ButtonPressed;

@@ -1,22 +1,17 @@
-﻿
-using ARGB_App.Model;
-using System;
+﻿using ARGB_App.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace ARGB_App.ViewModel
 {
-    public class ColorViewOperations
+    public class ColorView
     {
         public event ButtonDeletePressedHandler ButtonDeletePressed;
         private Grid _ColorCol { get; set; }
         private ConverterToHex _Converter { get; set; }
 
-        public ColorViewOperations(Grid colorCol, ConverterToHex converter)
+        public ColorView(Grid colorCol, ConverterToHex converter)
         {
             _ColorCol = colorCol;
             _Converter = converter;

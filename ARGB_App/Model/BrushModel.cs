@@ -1,6 +1,4 @@
 ﻿using ARGB_App.Event;
-using ARGB_App.ViewModel;
-using System.Collections.Generic;
 using System.Windows.Media;
 
 
