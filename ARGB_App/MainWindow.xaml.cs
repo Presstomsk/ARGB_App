@@ -12,20 +12,36 @@ namespace ARGB_App
    
     public partial class MainWindow : Window
     {
-        public static ButtonPressedHandler ButtonPressed;
+        public static ButtonAddPressedHandler ButtonPressed;
+        public static IsButtonEnabledHandler IsButtonEnabled;
+        public static NotButtonEnabledHandler NotButtonEnabled; 
 
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MyViewModel();            
+            this.DataContext = new MyViewModel(ColorCol);
+            IsButtonEnabled += IsEnable;
+            NotButtonEnabled += NotEnable;
         }
 
        
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ButtonPressed?.Invoke(ColorCol);
+            ButtonPressed?.Invoke();            
+
         }
+
+        private void IsEnable()
+        {
+            AddBut.IsEnabled = true;
+        }
+        private void NotEnable()
+        {
+            AddBut.IsEnabled = false;
+        }
+
+
 
         
 

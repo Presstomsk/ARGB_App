@@ -59,7 +59,7 @@
         <TextBlock Grid.Column="3" Grid.RowSpan="4" Width="60" Margin="10" Background="{Binding SelectedColor.Brush}"></TextBlock>
 
 
-        <Button Content="Add" Grid.Row="4" Grid.ColumnSpan="2" Margin="10" Height="30" Click="Button_Click"></Button>
+        <Button x:Name="AddBut" Content="Add" Grid.Row="4" Grid.ColumnSpan="2" Margin="10" Height="30" Click="Button_Click"></Button>
 
 
         <ScrollViewer Grid.Row="5" Grid.ColumnSpan="4">

@@ -1,5 +1,8 @@
 ﻿using ARGB_App.Event;
+using ARGB_App.ViewModel;
+using System.Collections.Generic;
 using System.Windows.Media;
+
 
 
 namespace ARGB_App.Model
@@ -11,7 +14,7 @@ namespace ARGB_App.Model
         private byte _red;
         private byte _green;
         private byte _blue;
-
+       
         public Brush Brush
         {
             get { return _brush; }
@@ -19,9 +22,12 @@ namespace ARGB_App.Model
             {
                 if (_brush != value)
                 {
-                    _brush = value;
-                    OnPropertyChanged(nameof(Brush));
+                   
+                        _brush = value;
+                        OnPropertyChanged(nameof(Brush));
+                        MainWindow.IsButtonEnabled?.Invoke();
                 }
+                
             }
         }
         public byte Alpha
@@ -75,17 +81,24 @@ namespace ARGB_App.Model
 
         public BrushModel()
         {
+            
             this.PropertyChanged += MyColor_PropertyChanged;
         }
 
         private void MyColor_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Alpha" || e.PropertyName == "Red" || e.PropertyName == "Blue" || e.PropertyName == "Green")
+                
                 Brush = new SolidColorBrush(Color.FromArgb(Alpha, Red, Green, Blue));
+               
+                
         }
 
-        
 
+        public BrushModel Clone()
+        {
+            return new BrushModel { Red = this.Red, Green=this.Green, Blue=this.Blue, Alpha=this.Alpha, Brush= this.Brush.Clone() };
+        }
         
 
     }

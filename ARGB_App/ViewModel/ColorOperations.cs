@@ -1,75 +1,62 @@
 ﻿
 using ARGB_App.Model;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace ARGB_App.ViewModel
 {
-    public delegate void ButtonPressedHandler(Grid colorCol);
+    public delegate void ButtonAddPressedHandler();
+    public delegate void ButtonDeletePressedHandler(string str);
     public class ColorOperations
-    {
-        private int _counter;
-        private Grid ColorCol { get; set; }
+    {        
+        private Grid _ColorCol { get; set; }
+        private ConverterToHex _Converter { get; set; }
+        private ColorViewOperations _ColorViewOperations { get; set; }        
         private BrushModel _SelectedColor { get; set; }
-        public ObservableCollection<BrushModel> Colors { set; get; }
-        public ColorOperations(BrushModel selectedColor)
+        public Dictionary<string,BrushModel> Colors { set; get; }
+        public ColorOperations(BrushModel selectedColor, Grid colorCol)
         {
+            ElementCounter.Counter = default;
+            _ColorCol = colorCol;
             _SelectedColor = selectedColor;
-            Colors = new ObservableCollection<BrushModel>();
+            _Converter = new ConverterToHex();
+            _ColorViewOperations = new ColorViewOperations(_ColorCol,_Converter);
+            Colors = new Dictionary<string,BrushModel>();
+            _ColorViewOperations.ButtonDeletePressed += DeleteColor;
         }
-        public void AddColor(Grid ColorCol)
-        {            
-            Colors.Add(_SelectedColor);
-            ColorCol.ColumnDefinitions.Clear();
-            ColorCol.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });
-            ColorCol.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(350) });
-            ColorCol.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });
-            ColorCol.RowDefinitions.Add(new RowDefinition { Height = new GridLength(50) });
-            for (int i = 0; i < 3; i++)
+        public void AddColor()
+        {
+            if (!Colors.ContainsKey(_Converter.ConvertToHEX(_SelectedColor)))
             {
-                for (int j = _counter; j < Colors.Count; j++)
-                {
-                    var info = new StackPanel();
-                    info.Orientation = Orientation.Horizontal;
-                    Grid.SetRow(info, j);
-                    Grid.SetColumn(info, i);
-                    if (i == 0) info.Children.Add(new Label { Margin = new Thickness(10, 10, 10, 10), MinWidth = 80, Content = ConvertToHEX(_SelectedColor)});
-                    if (i == 1) info.Children.Add(new TextBlock { Margin = new Thickness(10, 10, 10, 10), MinWidth = 330, MinHeight = 30, Background = Colors[j].Brush });
-                    if (i == 2) info.Children.Add(new Button { Margin = new Thickness(10, 10, 10, 10), MinWidth = 80, MinHeight = 30, Content = "Delete", Name=$"b_{_counter}_b"});
-                    foreach (var item in info.Children)
-                    {
-                        if (item is Button)
-                        {
-                            (item as Button).Click += DeleteButton_Click;
-                        }
-                    }
-                    ColorCol.Children.Add(info);
-                }
-            }
-            _counter++;
-            this.ColorCol = ColorCol;
-        }
+                var color = _SelectedColor.Clone();
+                Colors.Add(_Converter.ConvertToHEX(color), color);
+                _ColorViewOperations.AddColorToScreen(Colors.Count, color, Colors);
+                MainWindow.NotButtonEnabled?.Invoke();
+            }            
+                     
+        }      
 
         public void DeleteColor(string str)
         {
-            var subs = str.Split('_');
-            var num = int.Parse(subs[1]);           
-            
-            ColorCol.RowDefinitions[num].Height = new GridLength(0);
-            ColorCol.RowDefinitions.Remove(ColorCol.RowDefinitions[num]);
-        }
+            var subs = str.Split('_');            
+            Colors.Remove(subs[1]);
+            _ColorCol.Children.Clear();
+            _ColorCol.ColumnDefinitions.Clear();
+            _ColorCol.RowDefinitions.Clear();
+            ElementCounter.Counter = 0;
+            foreach (var item in Colors)
+            {
+                _ColorViewOperations.AddColorToScreen(ElementCounter.Counter + 1, item.Value, Colors);              
+                
+            }
+           
+        }        
 
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            DeleteColor((sender as Button).Name);
-        }
 
-        public string ConvertToHEX(BrushModel selectedColor)
-        {
-            return $"#{Convert.ToInt32(selectedColor.Alpha).ToString("X")}{Convert.ToInt32(selectedColor.Red).ToString("X")}{Convert.ToInt32(selectedColor.Green).ToString("X")}{Convert.ToInt32(selectedColor.Blue).ToString("X")}";
-        }
     }
 }

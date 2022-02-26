@@ -7,7 +7,8 @@ using System.Windows.Controls;
 
 namespace ARGB_App.ViewModel
 {
-   
+    public delegate void IsButtonEnabledHandler();
+    public delegate void NotButtonEnabledHandler();
     public class MyViewModel : MyEvent
     {
         
@@ -25,12 +26,13 @@ namespace ARGB_App.ViewModel
             }
         }
 
+        public Grid ColorCol { get; set; }
         public ColorOperations showColor { get; set; }
-        public MyViewModel()
+        public MyViewModel(Grid colorCol)
         {
-            
+            ColorCol = colorCol;
             SelectedColor = new BrushModel { Alpha = 0, Red = 0, Green = 0, Blue = 0 };
-            showColor = new ColorOperations(SelectedColor);
+            showColor = new ColorOperations(SelectedColor, ColorCol);
             MainWindow.ButtonPressed += showColor.AddColor;
 
         }
