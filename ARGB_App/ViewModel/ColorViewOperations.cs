@@ -51,6 +51,18 @@ namespace ARGB_App.ViewModel
             }
             ElementCounter.Counter++;
         }
+        public void UpdateColorOnScreen(Dictionary<string, BrushModel> colors)
+        {
+            _ColorCol.Children.Clear();
+            _ColorCol.ColumnDefinitions.Clear();
+            _ColorCol.RowDefinitions.Clear();
+            ElementCounter.Counter = 0;
+            foreach (var item in colors)
+            {
+                AddColorToScreen(ElementCounter.Counter + 1, item.Value, colors);
+
+            }
+        }
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             ButtonDeletePressed?.Invoke((sender as Button).Name);

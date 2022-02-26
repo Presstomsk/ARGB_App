@@ -45,16 +45,7 @@ namespace ARGB_App.ViewModel
         {
             var subs = str.Split('_');            
             Colors.Remove(subs[1]);
-            _ColorCol.Children.Clear();
-            _ColorCol.ColumnDefinitions.Clear();
-            _ColorCol.RowDefinitions.Clear();
-            ElementCounter.Counter = 0;
-            foreach (var item in Colors)
-            {
-                _ColorViewOperations.AddColorToScreen(ElementCounter.Counter + 1, item.Value, Colors);              
-                
-            }
-           
+            _ColorViewOperations.UpdateColorOnScreen(Colors);           
         }        
 
 
